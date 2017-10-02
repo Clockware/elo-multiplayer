@@ -21,18 +21,34 @@ function safeSumRounding(ratings) {
             .filter(i => !rounded[i]);
         balance /= newRatings.length - roundedCount;
         notRoundedRatings.forEach(i => { newRatings[i] += balance; });
+        balance = 0;
         
-        var mostObviousRoundingIndex = newRatings
-            .map((x, i) => [Math.abs(x - Math.round(x)), i])
+        var valueToRound = newRatings
+            .map((x, i) => [
+                newRatings.length - notRoundedRatings.map(j => newRatings[j]).filter(y => x === y).length, 
+                Math.abs(x - Math.round(x)),
+                x
+            ])
             .filter((x, i) => !rounded[i])
             .sort()
-            .map(x => x[1])[0];
-        var rating = newRatings[mostObviousRoundingIndex];
-        var roundedRating = Math.round(rating);
-        var balance = rating - roundedRating;
-        newRatings[mostObviousRoundingIndex] = roundedRating;
-        rounded[mostObviousRoundingIndex] = true;
-        ++roundedCount;
+            .map(x => x[2])[0];
+            
+        var indicesToRound = newRatings
+            .map((x, i) => [x, i])
+            .filter((x, i) => !rounded[i])
+            .filter(x => valueToRound === x[0])
+            .map(x => x[1]);
+        
+        for (var n = 0; n < indicesToRound.length; ++n) {
+            var indiceToRound = indicesToRound[n];
+            
+            var rating = newRatings[indiceToRound];
+            var roundedRating = Math.round(rating);
+            balance += rating - roundedRating;
+            newRatings[indiceToRound] = roundedRating;
+            rounded[indiceToRound] = true;
+            ++roundedCount;
+        }
     }
     
     return newRatings;
