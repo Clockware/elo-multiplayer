@@ -2,10 +2,9 @@
 Elo rating system calculations implementation for multiple players.
 
 **1. Basic extension for elo system.**
-
 Idea: 
 
-a)extend Ea = Qa / (Qa + Qb) formula to Ea = Qa / (Qa + Qb + ... + Qz). Ea + Eb + ... + Ez is still equals to 1.
+a)Extend Ea = Qa / (Qa + Qb) formula to Ea = Qa / (Qa + Qb + ... + Qz). Ea + Eb + ... + Ez is still equals to 1.
 
 b)Having expected probablitity of winning for PlayerA as Ea, rating change will be K * (result - Ea), where result is 1 if PlayerA is a winner and 0 otherwise.
 
@@ -15,7 +14,6 @@ b)Having expected probablitity of winning for PlayerA as Ea, rating change will 
 
 
 **2. Extension with use of ranks.**
-
 Idea: 
 
 a)Sometimes being 2nd/3rd in the game matters.
